@@ -1,0 +1,252 @@
+The Address book problem using the My SQL
+_________________________________________
+
+
+Uc-1
+-------------------------------
+
+create database AddressBook
+
+O/p
+--------
+#	Time		Action	Message	Duration / Fetch
+1	21:42:53	3	show databases	9 row(s) returned	0.016 sec / 0.000 sec
+______________________________________________________________________________________________
+
+
+UC-2
+------------------------------
+
+use AddressBook
+
+create table AddressBookTable(
+firstName varChar(30) not null ,
+LastName  varChar(30) not null ,
+adress  varChar(90) not null ,
+city  varChar(10) not null ,
+state  varChar(15) not null,
+zip  int ,
+phoneNumber varChar(10) not null ,
+email varChar(30) not null ,
+primary key(firstName)
+);
+
+
+________________________________________________________
+
+UC3
+--------------------------------------
+
+ insert into AddressBookTable(firstName,lastName,adress,city,state,zip,phoneNumber,email) values("Prasad","G","india","Mpl","Ap",9876789,876568798,"iiii@gmail.com"),("Rossy","G","india","Ap","Ap",800078,9987865567,"Ro@gmail.com"),("SWamy","P","india","mpl","ap",400098,987019,"S32@gmail.com"),("Hari","Hp","india","ctm","Ap",400078,992019,"Hp34@gmail.com");
+ 
+
+38	22:48:50	3	insert into AddressBookTable(firstName,lastName,adress,city,state,zip,phoneNumber,email) values("Prasad","G","india","Mpl","Ap",9876789,876568798,"iiii@gmail.com"),("Rossy","G","india","Ap","Ap",800078,9987865567,"Ro@gmail.com"),("SWamy","P","india","mpl","ap",400098,987019,"S32@gmail.com"),("Hari","Hp","india","ctm","Ap",400078,992019,"Hp34@gmail.com")	4 row(s) affected
+ Records: 4  Duplicates: 0  Warnings: 0	0.015 sec
+
+
+
+
+
+Hari	Hp	india	ctm	Ap	400078	992019	Hp34@gmail.com
+Prasad	G	india	Mpl	Ap	9876789	876568798	iiii@gmail.com
+Rossy	G	india	Ap	Ap	800078	9987865567	Ro@gmail.com
+SWamy	P	india	mpl	ap	400098	987019	S32@gmail.com
+							
+
+__________________________________________________________________
+UC -4 
+------------------------------------------------------------------
+update AddressBookTable set city = "ctm" where firstName = "Rossy";
+
+Hari	Hp	india	ctm	Ap	400078	992019	Hp34@gmail.com
+Prasad	G	india	Mpl	Ap	9876789	876568798	iiii@gmail.com
+Rossy	G	india	ctm	Ap	800078	9987865567	Ro@gmail.com
+SWamy	P	india	mpl	ap	400098	987019	S32@gmail.com
+							
+
+43	22:54:16	3	update AddressBookTable set city = "ctm" where firstName = "Rossy"	1 row(s) affected
+ Rows matched: 1  Changed: 1  Warnings: 0	0.015 sec
+44	22:57:30	3	select * from AddressBookTable
+ LIMIT 0, 1000	4 row(s) returned	0.000 sec / 0.000 sec
+
+_________________________________________________________________________________________________________________________
+
+UC-5
+-----------------------------------------------------
+delete from AddressBookTable where firstName ="SWamy";
+
+Hari	Hp	india	ctm	Ap	400078	992019	Hp34@gmail.com
+Prasad	G	india	Mpl	Ap	9876789	876568798	iiii@gmail.com
+Rossy	G	india	ctm	Ap	800078	9987865567	Ro@gmail.com
+_________________________________________________________________________________________________________________________
+
+
+UC-6
+------------------------------
+
+select * from AddressBookTable
+ where state = 'Ap';
+  select * from AddressBookTable
+ where city = 'ctm';
+
+
+
+
+
+Hari	Hp	india	ctm	Ap	400078	992019	Hp34@gmail.com
+Rossy	G	india	ctm	Ap	800078	9987865567	Ro@gmail.com
+							
+
+
+__________________________________________________________________________________________________________________
+
+UC-7
+----------------------------------------------------
+
+select count(state) from AddressBookTable
+where state = 'Ap';
+select count(city) from AddressBookTable
+where city ='ctm';
+
+61	23:08:33	3	select count(city) from AddressBookTable
+ where city ='ctm'
+ LIMIT 0, 1000	1 row(s) returned	0.000 sec / 0.000 sec
+
+
+o/p
+
+2
+_____________________________________________________________________________________________________________________
+
+UC-8
+
+select * from AddressBookTable
+where city =  'ctm' order by firstName desc;
+
+
+
+Rossy	G	india	ctm	Ap	800078	9987865567	Ro@gmail.com
+Hari	Hp	india	ctm	Ap	400078	992019	Hp34@gmail.com
+							
+
+63	23:10:29	3	select * from AddressBookTable
+ where city =  'ctm' order by firstName desc
+ LIMIT 0, 1000	2 row(s) returned	0.015 sec / 0.000 sec
+
+____________________________________________________________________________________________________________________
+#UC9
+alter table address_book_table add address_book_name varchar(20) after last ;
+alter table address_book_table add address_book_type varchar(20) after address_book_name ;
+update address_book_table set address_book_name = "Friends Forever"
+where first = 'romil';
+update address_book_table set address_book_name = "Friends Forever"
+where first = 'prathmesh';
+update address_book_table set address_book_name = "Friends Forever"
+where first = 'sarvesh';
+update address_book_table set address_book_name = "Family forever "
+where first in("pravin");
+update address_book_table set address_book_type = "Family "
+where first in("pravin");
+update address_book_table set address_book_type = "Friends "
+where first in("prathmesh","romil","sarvesh");
+select * from address_book_table;
+____________________________________________________________________________________________________________________
+#UC10
+select count(address_book_type) from address_book_table
+where address_book_type = "Friends ";
+select count(address_book_type) from address_book_table
+where address_book_type = 'Family ';
+____________________________________________________________________________________________________________________
+#UC11
+insert into address_book_table(first,last,city,state,zip,phone_number,email,address_book_type,address_book_name) values("Vaibhav","Gopale","Bhandup","Maharashtra",400334,748373,"Vaibhav123@gmail.com","Friends ","Friends Forever"),("Siddhesh","Shewale","Bhandup","Maharashtra",400334,748373,"sid324@gmail.com","Family ","Family Forever");
+select * from address_book_table;
+____________________________________________________________________________________________________________________
+#UC12 Draw the ER Diagram for Address Book Service DB
+
+ CREATE TABLE  contacts
+ (firstName varchar(50) NOT NULL, lastName varchar(50) NOT NULL,
+mobileNumber varchar(20) NOT NULL,email varchar(50) NOT NULL, PRIMARY KEY(firstName));
+
+ describe contacts;
+
+ create table address (
+zip varchar(6) not null,
+state varchar(30) not null,
+primary key(zip));
+
+ describe address;
+
+ ALTER TABLE address
+ADD city varchar(50);
+
+ describe address;
+
+ create table contacts_address(
+firstname varchar(30) not null,
+zip varchar(6) not null,
+foreign key (firstname) references contacts(firstname),
+foreign key (zip) references address(zip));
+
+ desc contacts_address;
+
+ create table relations(
+ type varchar(15),
+primary key(type));
+
+ desc relations;
+
+ create table contacts_relation(
+firstname varchar(30) not null,
+type varchar(15),
+foreign key (firstname) references contacts(firstname),
+foreign key(type) references relations(type));
+
+ desc contacts_relation;
+
+insert into contacts values('Manoj','Sonawane','7852031478','abc@gmail.com'),
+('Nitin','Patil','6254782145','kohli@gmail.com'),
+('Ajay','Koli','6587425365','ajay@yahoo.com');
+
+select * from contacts;
+
+ insert into relations values('family'),('friend'),('work');
+
+ select * from relations;
+
+
+ insert into address values ('560039','Bangalore','Karnataka'),
+('560040','Mumbai','Maharashtra'),
+('560001','Chennai','Tamil Nadu');
+
+ select * from address;
+
+insert into contacts_relation values
+( 'Manoj', 'friend'),
+( 'Nitin', 'family'),
+( 'Manoj', 'friend');
+
+ select * from contacts_relation;
+
+insert into contacts_address values ('Manoj','560001');
+
+insert into contacts_address values ('Nitin','560039');
+
+insert into contacts_address values ('Manoj','560040');
+
+select * from contacts_address;
+ 
+____________________________________________________________________________________________________________________
+
+#UC16 Ensure all retrieve queries done especially in UC 6, UC 7, UC 8 and UC 10 are working with new table structure
+
+ select count(contacts.firstname) from contacts,contacts_address,address
+where contacts.firstname = contacts_address.firstname and contacts_address.zip = address.zip and address.state = 'karnataka';
+
+ select count(contacts.firstname) from contacts,contacts_address,address
+where contacts.firstname = contacts_address.firstname and contacts_address.zip = address.zip and address.city = 'karnataka';
+
+select type, Count(firstName) from contacts_relation group by type;
+
+____________________________________________________________________________________________________________________
+
+							
